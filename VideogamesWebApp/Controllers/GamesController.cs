@@ -172,7 +172,7 @@ public class GamesController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddGame(string gameName, string gameDescription, int? mainGameId)
+    public async Task<IActionResult> AddGame(string gameName, string gameDescription, int? mainGameId, bool fromViewAllGames = false)
     {
         if (!string.IsNullOrWhiteSpace(gameName) && !string.IsNullOrWhiteSpace(gameDescription))
         {
@@ -196,13 +196,23 @@ public class GamesController : Controller
             _dbContext.Games.Add(game);
             await _dbContext.SaveChangesAsync();
 
-            // Redirect back to Buy Game modal with game name
-            return RedirectToAction("Index", "Games", new { gameName = gameName });
+            // Redirect based on the fromViewAllGames parameter
+            if (fromViewAllGames)
+            {
+                // Redirect back to the ViewAllGames page
+                return RedirectToAction("ViewAllGames", new { sortOrder = "alphabetical" });
+            }
+            else
+            {
+                // Redirect back to Buy Game modal with game name
+                return RedirectToAction("Index", "Games", new { gameName = gameName, gameId = game.GameId });
+            }
         }
 
         TempData["ErrorMessage"] = "Il nome e la descrizione del gioco non possono essere vuoti.";
         return RedirectToAction("ViewAllGames", new { sortOrder = "alphabetical" });
     }
+
     [HttpPost]
     public IActionResult AddStore(string storeName, string storeDescription, string storeLink)
     {
@@ -400,7 +410,7 @@ public class GamesController : Controller
 
     public IActionResult GetAllStores(int page = 1, int pageSize = 5)
     {
-        var stores = _dbContext.Stores.ToList(); 
+        var stores = _dbContext.Stores.ToList();
         var totalStores = stores.Count();
         var pagedStores = stores.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
@@ -462,4 +472,5 @@ public class GamesController : Controller
 
 
 }
+
 
