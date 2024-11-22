@@ -124,7 +124,7 @@
                 </div>
                 <div class="modal-body">
                     <form asp-action="AddGame" asp-controller="Games" method="post" id="addGameForm">
-                        <input type="hidden" name="fromViewAllGames" value="false" /> <!-- Hidden input to indicate the source -->
+                        <input type="hidden" name="fromViewAllGames" id="fromAllViewGames" value="false" /> <!-- Hidden input to indicate the source -->
                         <div class="mb-3">
                             <label for="gameNameInput" class="form-label">Game Name</label>
                             <input type="text" class="form-control" id="gameNameInput" name="GameName" required>
@@ -213,6 +213,7 @@
     if (gameName) {
         const gameModal = new bootstrap.Modal(document.getElementById('addGameModal'));
         document.getElementById('gameNameInput').value = gameName;
+        fromAllViewGames.value = urlParams.get('fromAllViewGames');
         gameModal.show();
     }
     

@@ -259,7 +259,12 @@ function redirectToAddGame() {
     showError(launcherSearch, document.getElementById('launcherSearchError'), true);
 
     // Reindirizza alla pagina "View All Games".
-    window.location.href = `ViewAllGames?gameName=${encodeURIComponent(gameName)}&price=${encodeURIComponent(price)}&purchaseDate=${encodeURIComponent(purchaseDate)}&notes=${encodeURIComponent(notes)}`;
+    window.location.href = `ViewAllGames?
+        gameName=${encodeURIComponent(gameName)}&
+        price=${encodeURIComponent(price)}&
+        purchaseDate=${encodeURIComponent(purchaseDate)}&
+        notes=${encodeURIComponent(notes)}&
+        fromAllViewGames=true`;
 }
 
 document.addEventListener("DOMContentLoaded", function () {

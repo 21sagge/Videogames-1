@@ -199,13 +199,13 @@ public class GamesController : Controller
             // Redirect based on the fromViewAllGames parameter
             if (fromViewAllGames)
             {
-                // Redirect back to the ViewAllGames page
-                return RedirectToAction("ViewAllGames", new { sortOrder = "alphabetical" });
+                // Redirect back to the ViewAllGames page with new game name and id
+                return RedirectToAction("Index", "Games", new { sortOrder = "alphabetical", gameName = gameName, gameId = game.GameId });
             }
             else
             {
-                // Redirect back to Buy Game modal with game name
-                return RedirectToAction("Index", "Games", new { gameName = gameName, gameId = game.GameId });
+                // Redirect to the Index page
+                return RedirectToAction("Index", "Games");
             }
         }
 
